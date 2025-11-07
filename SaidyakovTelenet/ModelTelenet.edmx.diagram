@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6e81ec9a0e9949529495b403b031f238" Name="Diagram1">
+        <EntityTypeShape EntityType="TelenetDBModel.CALL" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.clients" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.EMPLOYEE" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.EQUIPMENT" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.MAINTENANCE" Width="1.5" PointX="7.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.PAYMENT" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.PHONE_NUMBER" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.SERVICE" Width="1.5" PointX="5.25" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.SERVICE_REQUEST" Width="1.5" PointX="3" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.SUBSCRIBER" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.TARIFF" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TelenetDBModel.SUBSCRIBER_BACKUP" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="TelenetDBModel.FK__CALL__CALLER_ID__6D0D32F4" ManuallyRouted="false" />
+        <AssociationConnector Association="TelenetDBModel.FK__MAINTENAN__EMPLO__787EE5A0" ManuallyRouted="false" />
+        <AssociationConnector Association="TelenetDBModel.FK__EQUIPMENT__PHONE__74AE54BC" ManuallyRouted="false" />
+        <AssociationConnector Association="TelenetDBModel.FK__MAINTENAN__EQUIP__778AC167" ManuallyRouted="false" />
+        <AssociationConnector Association="TelenetDBModel.FK__PAYMENT__SUBSCRI__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="TelenetDBModel.FK__PHONE_NUM__SUBSC__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="TelenetDBModel.FK__SERVICE__TARIFF___60A75C0F" ManuallyRouted="false" />
+        <AssociationConnector Association="TelenetDBModel.FK__SERVICE_R__SUBSC__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="TelenetDBModel.FK_TARIFF_SUBSCRIBER" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
