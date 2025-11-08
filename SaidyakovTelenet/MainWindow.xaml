@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:SaidyakovTelenet"
         mc:Ignorable="d"
         Title="Telenet" Height="450" Width="800" Icon="/images/Telenet_logo.png">
-    <Grid>
+    <Grid HorizontalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Image Source="/images/Telenet_logo.png" HorizontalAlignment="Left" Height="60"/>
-        <TextBlock Text="Абоненты" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"></TextBlock>
+        <Image Grid.Row="0" Source="/images/Telenet_logo.png" HorizontalAlignment="Left" Height="60"/>
+        <TextBlock Grid.Row="0" Text="Абоненты" HorizontalAlignment="Center" FontSize="24" VerticalAlignment="Center"></TextBlock>
 
-        <Button Name="BtnBack" Content="Назад" Click="BtnBack_Click" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <Button Grid.Row="0" Margin="10" Padding="5" Name="BtnBack" Content="Назад" Click="BtnBack_Click" VerticalAlignment="Center" HorizontalAlignment="Right"/>
 
-        <Frame Name="FrameBase" NavigationUIVisibility="Hidden" ContentRendered="FrameBase_ContentRendered" Grid.Row="1"></Frame>
+        <Frame Grid.Row="1" Name="FrameBase" NavigationUIVisibility="Hidden" ContentRendered="FrameBase_ContentRendered"></Frame>
     </Grid>
 </Window>
