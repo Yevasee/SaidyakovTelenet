@@ -11,7 +11,8 @@ namespace SaidyakovTelenet
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Text;
+
     public partial class SUBSCRIBER
     {
         public SUBSCRIBER()
@@ -28,6 +29,15 @@ namespace SaidyakovTelenet
         public string SUBSCRIBER_PATRONYMIC { get; set; }
         public string SUBSCRIBER_ADDRESS { get; set; }
         public System.DateTime SUBSCRIBER_CONNECTION_DATE { get; set; }
+        public String _SUBSCRIBER_CONNECTION_DATE
+        {
+            get 
+            {
+                String date = SUBSCRIBER_CONNECTION_DATE.ToString("dd.MM.yyyy");
+                return date;
+            }
+            set { }
+        }
         public string SUBSCRIBER_STATUS { get; set; }
     
         public string subscriberFullName

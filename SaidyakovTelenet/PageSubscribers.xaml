@@ -89,7 +89,7 @@
                                     </StackPanel>
 
                                     <TextBlock Text="{Binding SUBSCRIBER_ADDRESS, StringFormat = Адрес: {0}}" FontSize="20" Grid.Row="1"/>
-                                    <TextBlock Text="{Binding SUBSCRIBER_CONNECTION_DATE, StringFormat = Дата подключения: {0}}" FontSize="20" Grid.Row="2"/>
+                                    <TextBlock Text="{Binding _SUBSCRIBER_CONNECTION_DATE, StringFormat = Дата подключения: {0}}" FontSize="20" Grid.Row="2"/>
                                     <TextBlock Text="{Binding SUBSCRIBER_STATUS, StringFormat = Статус: {0}}"  FontSize="20" Grid.Row="3"/>
 
                                     <!--<StackPanel Name="StackPanelProductCosts" Grid.Row="4">

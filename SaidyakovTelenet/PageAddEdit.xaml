@@ -40,7 +40,7 @@
         <TextBox Grid.Row="4" Grid.Column="1" Name="TextBoxSubscriberAddress" Text="{Binding SUBSCRIBER_ADDRESS}" FontSize="20" Margin="10"/>
 
         <TextBlock Grid.Row="5" Grid.Column="0" Text="Дата подключения:" FontSize="20" Margin="10"/>
-        <TextBox Grid.Row="5" Grid.Column="1" Name="TextBoxSubscriberConnectionDate" Text="{Binding SUBSCRIBER_CONNECTION_DATE}" FontSize="20" Margin="10"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Name="TextBoxSubscriberConnectionDate" Text="{Binding _SUBSCRIBER_CONNECTION_DATE}" FontSize="20" Margin="10"/>
 
         <TextBlock Grid.Row="6" Grid.Column="0" Text="Статус:" FontSize="20" Margin="10"/>
         <ComboBox Grid.Row="6" Grid.Column="1" Name="ComboBoxStatusOfSubscriber" SelectionChanged="ComboBoxStatusOfSubscriber_SelectionChanged" FontSize="20" Background="Transparent" Margin="10">
