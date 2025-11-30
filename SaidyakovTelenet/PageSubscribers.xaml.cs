@@ -70,7 +70,7 @@ namespace SaidyakovTelenet
             listViewSubscribers.ItemsSource = listSubscribersForPage;
         }
 
-        private void ComboBoxFilterMaker()
+        public void ComboBoxFilterMaker()
         {
             switch (ComboBoxFilter.SelectedIndex)
             {
@@ -83,7 +83,7 @@ namespace SaidyakovTelenet
             listViewSubscribers.ItemsSource = listSubscribersForPage;
         }
         
-        private void TextBoxSearchMaker()
+        public void TextBoxSearchMaker()
         {
             string[] searchText = TextBoxSearch.Text.ToLower().Split(' ');
             for (int i = 0; i < searchText.Length; i++)

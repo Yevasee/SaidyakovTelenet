@@ -60,7 +60,7 @@ namespace SaidyakovTelenet
             }
         }
 
-        private void ButtonSave_Click(object sender, RoutedEventArgs e)
+        public void ButtonSave_Click(object sender, RoutedEventArgs e)
         {
             StringBuilder errors = new StringBuilder();
             if (string.IsNullOrWhiteSpace(_currentSubscriber.SUBSCRIBER_LASTNAME))
@@ -107,7 +107,7 @@ namespace SaidyakovTelenet
             }
         }
 
-        private void ButtonDelete_Click(object sender, RoutedEventArgs e)
+        public void ButtonDelete_Click(object sender, RoutedEventArgs e)
         {
             var _subscriber = (sender as Button).DataContext as SUBSCRIBER;
 
