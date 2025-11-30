@@ -14,11 +14,23 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="0">
+        <StackPanel Orientation="Vertical" Grid.Row="0">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Вы авторизованы как " FontSize="15"/>
+                <TextBlock Name="TextBlockFIO" Text="" FontSize="15"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Роль: " FontSize="15"/>
+                <TextBlock Name="TextBlockRole" Text="" FontSize="15"/>
+            </StackPanel>
+        </StackPanel>
+        
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="1">
             <StackPanel Orientation="Vertical" VerticalAlignment="Bottom" Margin="10">
                 <TextBlock Text="Поиск" FontSize="15" VerticalAlignment="Top" Margin="5"/>
                 <TextBox Name="TextBoxSearch" TextChanged="TextBoxSearch_TextChanged" Width="200" FontSize="15" Margin="5"/>
@@ -41,12 +53,12 @@
                     <TextBlock>От Я до А</TextBlock>
                 </ComboBox>
             </StackPanel>
-            <Button Content="Добавить" Name="AddButton" Click="AddButton_Click" Padding="5" Margin="15"
+            <Button Content="Добавить" Name="BtnAdd" Click="BtnAdd_Click" Padding="5" Margin="15"
                     HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
         </StackPanel>
 
 
-        <ListView Name="listViewSubscribers" Grid.Row="1" HorizontalAlignment="Center">
+        <ListView Name="listViewSubscribers" Grid.Row="2" HorizontalAlignment="Center">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center">
@@ -55,20 +67,6 @@
                                 <ColumnDefinition Width="500"></ColumnDefinition>
                                 <ColumnDefinition Width="150"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-
-                            <!--<Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Margin="20, 10, 10, 10">
-                                <Image HorizontalAlignment="Center">
-                                    <Image.Source>
-                                        <Binding Path="ProductPhoto">
-                                            <Binding.TargetNullValue>
-                                                <ImageSource>
-                                                    /img/Icon.png
-                                                </ImageSource>
-                                            </Binding.TargetNullValue>
-                                        </Binding>
-                                    </Image.Source>
-                                </Image>
-                            </Border>-->
 
                             <Border BorderBrush="Black" BorderThickness="1" Grid.Column="0" Margin="10">
                                 <Grid>
@@ -112,19 +110,17 @@
                                 </Grid>
                             </Border>
 
-                            <!--<Border BorderBrush="Black" BorderThickness="1" Grid.Column="2" Margin="0, 10, 10, 10">
-                                <TextBlock Text="{Binding ProductDiscountAmount, StringFormat= Скидка: {0}%}" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            </Border>-->
-                            <Button Grid.Column="1" Grid.RowSpan="7" Name="ChangeBtn" Content="Изменить" Margin="10" Padding="10"
+                            <Button Grid.Column="1" Grid.RowSpan="7" Name="BtnChange" Content="Изменить" Margin="10" Padding="10"
                                 HorizontalAlignment="Center" VerticalAlignment="Center"
-                                Click="ChangeBtn_Click"/>
+                                Click="BtnChange_Click" Loaded="BtnChange_Loaded">
+                            </Button>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Right" Margin="10">
+        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Right" Margin="10">
             <TextBlock Text="Записей: "></TextBlock>
             <TextBlock Name ="TextBlockCountOfRecordsOnPage"></TextBlock>
             <TextBlock Text=" из "></TextBlock>

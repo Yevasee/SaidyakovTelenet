@@ -24,22 +24,10 @@ namespace SaidyakovTelenet
         {
             InitializeComponent();
 
-            FrameBase.Navigate(new PageSubscribers());
+            FrameBase.Navigate(new PageAuth());
 
             Manager.FrameBase = FrameBase;
         }
-
-        //private void FrameBase_ContentRendered(object sender, EventArgs e)
-        //{
-        //    if (FrameBase.CanGoBack)
-        //    {
-        //        BtnBack.Visibility = Visibility.Visible;
-        //    }
-        //    else
-        //    {
-        //        BtnBack.Visibility = Visibility.Hidden;
-        //    }
-        //}
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {

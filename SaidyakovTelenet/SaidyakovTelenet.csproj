@@ -82,8 +82,26 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelTelenet.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelTelenetUsers.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTelenetUsers.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelTelenetUsers.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTelenetUsers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelTelenetUsers.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTelenetUsers.edmx</DependentUpon>
+    </Compile>
     <Compile Include="PageAddEdit.xaml.cs">
       <DependentUpon>PageAddEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PageAuth.xaml.cs">
+      <DependentUpon>PageAuth.xaml</DependentUpon>
     </Compile>
     <Compile Include="PAYMENT.cs">
       <DependentUpon>ModelTelenet.tt</DependentUpon>
@@ -104,10 +122,16 @@
       <DependentUpon>ModelTelenet.tt</DependentUpon>
     </Compile>
     <Compile Include="sysdiagrams.cs">
-      <DependentUpon>ModelTelenet.tt</DependentUpon>
+      <DependentUpon>ModelTelenetUsers.tt</DependentUpon>
     </Compile>
     <Compile Include="TARIFF.cs">
       <DependentUpon>ModelTelenet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="User.cs">
+      <DependentUpon>ModelTelenetUsers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserRole.cs">
+      <DependentUpon>ModelTelenetUsers.tt</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -122,6 +146,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="PageAddEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageAuth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,6 +197,13 @@
     <None Include="ModelTelenet.edmx.diagram">
       <DependentUpon>ModelTelenet.edmx</DependentUpon>
     </None>
+    <EntityDeploy Include="ModelTelenetUsers.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelTelenetUsers.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="ModelTelenetUsers.edmx.diagram">
+      <DependentUpon>ModelTelenetUsers.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -182,6 +217,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ModelTelenetUsers.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelTelenetUsers.edmx</DependentUpon>
+      <LastGenOutput>ModelTelenetUsers.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelTelenetUsers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelTelenetUsers.edmx</DependentUpon>
+      <LastGenOutput>ModelTelenetUsers.cs</LastGenOutput>
+    </Content>
     <Resource Include="images\Telenet_logo.png" />
     <Content Include="ModelTelenet.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

@@ -23,9 +23,34 @@ namespace SaidyakovTelenet
         List<SUBSCRIBER> listSubscribersForPage = new List<SUBSCRIBER>();
         int countOfRecordsInTotal = 0;
         int countOfRecordsOnPage = 0;
-        public PageSubscribers()
+
+        private string userFullName;
+        public User currentUser;
+        public User CurrentUser
+        {
+            get { return currentUser; }
+        }
+        public PageSubscribers(User user = null)
         {
             InitializeComponent();
+
+            this.DataContext = this;
+
+
+            if (user == null)
+            {
+                TextBlockFIO.Text = "гость";
+                TextBlockRole.Text = "Гость";
+                BtnAdd.Visibility = Visibility.Hidden;
+                currentUser = null;
+            }
+            else
+            {
+                currentUser = user;
+                TextBlockFIO.Text = user.UserSurname + " " + user.UserName + " " + user.UserPatronymic;
+                TextBlockRole.Text = user.UserRole.RoleName;
+            }
+
             ComboBoxSorter.SelectedIndex = 0;
             ComboBoxFilter.SelectedIndex = 0;
             UpdateSubscribers();
@@ -41,6 +66,39 @@ namespace SaidyakovTelenet
 
             countOfRecordsOnPage = listSubscribersForPage.Count;
             TextBlockCountOfRecordsOnPage.Text = countOfRecordsOnPage.ToString();
+
+            // Принудительно обновляем видимость кнопок
+            if (listViewSubscribers.ItemsSource != null)
+            {
+                foreach (var item in listViewSubscribers.Items)
+                {
+                    var container = listViewSubscribers.ItemContainerGenerator.ContainerFromItem(item);
+                    if (container != null)
+                    {
+                        var button = FindVisualChild<Button>(container);
+                        if (button != null && button.Name == "BtnChange")
+                        {
+                            button.Visibility = currentUser == null ? Visibility.Collapsed : Visibility.Visible;
+                        }
+                    }
+                }
+            }
+        }
+
+        // Вспомогательный метод для поиска в визуальном дереве
+        private T FindVisualChild<T>(DependencyObject parent) where T : DependencyObject
+        {
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(parent); i++)
+            {
+                var child = VisualTreeHelper.GetChild(parent, i);
+                if (child is T result)
+                    return result;
+
+                var descendant = FindVisualChild<T>(child);
+                if (descendant != null)
+                    return descendant;
+            }
+            return null;
         }
 
         private void ComboBoxSorter_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -99,12 +157,12 @@ namespace SaidyakovTelenet
             listViewSubscribers.ItemsSource = listSubscribersForPage;
         }
 
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
             Manager.FrameBase.Navigate(new PageAddEdit(null));
         }
 
-        private void ChangeBtn_Click(object sender, RoutedEventArgs e)
+        private void BtnChange_Click(object sender, RoutedEventArgs e)
         {
             Manager.FrameBase.Navigate(new PageAddEdit((sender as Button).DataContext as SUBSCRIBER));
         }
@@ -115,6 +173,15 @@ namespace SaidyakovTelenet
                 TelenetDBEntities.GetContext().ChangeTracker.Entries().ToList().ForEach(p => p.Reload());
                 listViewSubscribers.ItemsSource = TelenetDBEntities.GetContext().SUBSCRIBER.ToList();
                 UpdateSubscribers();
+            }
+        }
+
+        private void BtnChange_Loaded(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                button.Visibility = currentUser == null ? Visibility.Collapsed : Visibility.Visible;
             }
         }
     }
