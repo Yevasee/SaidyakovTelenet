@@ -17,10 +17,10 @@ namespace SaidyakovTelenet
         public TARIFF()
         {
             this.SERVICE = new HashSet<SERVICE>();
+            this.SUBSCRIBER = new HashSet<SUBSCRIBER>();
         }
     
         public int TARIFF_ID { get; set; }
-        public int SUBSCRIBER_ID { get; set; }
         public string TARIFF_NAME { get; set; }
         public decimal TARIFF_COST { get; set; }
         public string TARIFF_DESCRIPTION { get; set; }
@@ -28,6 +28,6 @@ namespace SaidyakovTelenet
         public int TARIFF_DATA_LIMIT { get; set; }
     
         public virtual ICollection<SERVICE> SERVICE { get; set; }
-        public virtual SUBSCRIBER SUBSCRIBER { get; set; }
+        public virtual ICollection<SUBSCRIBER> SUBSCRIBER { get; set; }
     }
 }

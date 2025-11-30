@@ -122,7 +122,7 @@ namespace SaidyakovTelenet
                 var _subscriberServiceRequest = TelenetDBEntities.GetContext().SERVICE_REQUEST.ToList();
                 var _subscriberPayment = TelenetDBEntities.GetContext().PAYMENT.ToList();
                 _subscriberTariff = _subscriberTariff.
-                    Where(p => p.SUBSCRIBER_ID == _subscriber.SUBSCRIBER_ID).ToList();
+                    Where(p => p.TARIFF_ID == _subscriber.SUBSCRIBER_TARIFF_ID).ToList();
                 _subscriberPhone = _subscriberPhone.
                     Where(p => p.SUBSCRIBER_ID == _subscriber.SUBSCRIBER_ID).ToList();
                 _subscriberServiceRequest = _subscriberServiceRequest.

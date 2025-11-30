@@ -11,8 +11,7 @@ namespace SaidyakovTelenet
 {
     using System;
     using System.Collections.Generic;
-    using System.Text;
-
+    
     public partial class SUBSCRIBER
     {
         public SUBSCRIBER()
@@ -20,7 +19,6 @@ namespace SaidyakovTelenet
             this.PAYMENT = new HashSet<PAYMENT>();
             this.PHONE_NUMBER = new HashSet<PHONE_NUMBER>();
             this.SERVICE_REQUEST = new HashSet<SERVICE_REQUEST>();
-            this.TARIFF = new HashSet<TARIFF>();
         }
     
         public int SUBSCRIBER_ID { get; set; }
@@ -29,17 +27,8 @@ namespace SaidyakovTelenet
         public string SUBSCRIBER_PATRONYMIC { get; set; }
         public string SUBSCRIBER_ADDRESS { get; set; }
         public System.DateTime SUBSCRIBER_CONNECTION_DATE { get; set; }
-        public String _SUBSCRIBER_CONNECTION_DATE
-        {
-            get 
-            {
-                String date = SUBSCRIBER_CONNECTION_DATE.ToString("dd.MM.yyyy");
-                return date;
-            }
-            set { }
-        }
         public string SUBSCRIBER_STATUS { get; set; }
-    
+        public Nullable<int> SUBSCRIBER_TARIFF_ID { get; set; }
         public string subscriberFullName
         {
             get
@@ -49,9 +38,18 @@ namespace SaidyakovTelenet
             }
             set { }
         }
+        public String _SUBSCRIBER_CONNECTION_DATE
+        {
+            get
+            {
+                String date = SUBSCRIBER_CONNECTION_DATE.ToString("dd.MM.yyyy");
+                return date;
+            }
+            set { }
+        }
         public virtual ICollection<PAYMENT> PAYMENT { get; set; }
         public virtual ICollection<PHONE_NUMBER> PHONE_NUMBER { get; set; }
         public virtual ICollection<SERVICE_REQUEST> SERVICE_REQUEST { get; set; }
-        public virtual ICollection<TARIFF> TARIFF { get; set; }
+        public virtual TARIFF TARIFF { get; set; }
     }
 }

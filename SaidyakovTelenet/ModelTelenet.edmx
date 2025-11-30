@@ -16,15 +16,6 @@
           <Property Name="CALL_DURATION" Type="int" Nullable="false" />
           <Property Name="CALL_COST" Type="decimal" Precision="10" Scale="2" Nullable="false" />
         </EntityType>
-        <EntityType Name="clients">
-          <Key>
-            <PropertyRef Name="client_id" />
-          </Key>
-          <Property Name="client_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="last_name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="first_name" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="patronymic" Type="nvarchar" MaxLength="100" />
-        </EntityType>
         <EntityType Name="EMPLOYEE">
           <Key>
             <PropertyRef Name="EMPLOYEE_ID" />
@@ -113,25 +104,7 @@
           <Property Name="SUBSCRIBER_ADDRESS" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="SUBSCRIBER_CONNECTION_DATE" Type="date" Nullable="false" />
           <Property Name="SUBSCRIBER_STATUS" Type="varchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <!--Ошибки, обнаруженные при создании:
-предупреждение 6002: В таблице или представлении "TelenetDB.dbo.SUBSCRIBER_BACKUP" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
-        <EntityType Name="SUBSCRIBER_BACKUP">
-          <Key>
-            <PropertyRef Name="SUBSCRIBER_ID" />
-            <PropertyRef Name="SUBSCRIBER_LASTNAME" />
-            <PropertyRef Name="SUBSCRIBER_FIRSTNAME" />
-            <PropertyRef Name="SUBSCRIBER_ADDRESS" />
-            <PropertyRef Name="SUBSCRIBER_CONNECTION_DATE" />
-            <PropertyRef Name="SUBSCRIBER_STATUS" />
-          </Key>
-          <Property Name="SUBSCRIBER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SUBSCRIBER_LASTNAME" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="SUBSCRIBER_FIRSTNAME" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="SUBSCRIBER_PATRONYMIC" Type="varchar" MaxLength="100" />
-          <Property Name="SUBSCRIBER_ADDRESS" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="SUBSCRIBER_CONNECTION_DATE" Type="date" Nullable="false" />
-          <Property Name="SUBSCRIBER_STATUS" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="SUBSCRIBER_TARIFF_ID" Type="int" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -148,7 +121,6 @@
             <PropertyRef Name="TARIFF_ID" />
           </Key>
           <Property Name="TARIFF_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SUBSCRIBER_ID" Type="int" Nullable="false" />
           <Property Name="TARIFF_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="TARIFF_COST" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="TARIFF_DESCRIPTION" Type="text" />
@@ -251,21 +223,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TARIFF_SUBSCRIBER">
-          <End Role="SUBSCRIBER" Type="Self.SUBSCRIBER" Multiplicity="1" />
-          <End Role="TARIFF" Type="Self.TARIFF" Multiplicity="*" />
+        <Association Name="FK_SUBSCRIBER_TARIFF">
+          <End Role="TARIFF" Type="Self.TARIFF" Multiplicity="0..1" />
+          <End Role="SUBSCRIBER" Type="Self.SUBSCRIBER" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SUBSCRIBER">
-              <PropertyRef Name="SUBSCRIBER_ID" />
+            <Principal Role="TARIFF">
+              <PropertyRef Name="TARIFF_ID" />
             </Principal>
-            <Dependent Role="TARIFF">
-              <PropertyRef Name="SUBSCRIBER_ID" />
+            <Dependent Role="SUBSCRIBER">
+              <PropertyRef Name="SUBSCRIBER_TARIFF_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище TelenetDBModelContainer">
           <EntitySet Name="CALL" EntityType="Self.CALL" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="clients" EntityType="Self.clients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EMPLOYEE" EntityType="Self.EMPLOYEE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EQUIPMENT" EntityType="Self.EQUIPMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MAINTENANCE" EntityType="Self.MAINTENANCE" Schema="dbo" store:Type="Tables" />
@@ -276,17 +247,6 @@
           <EntitySet Name="SUBSCRIBER" EntityType="Self.SUBSCRIBER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TARIFF" EntityType="Self.TARIFF" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SUBSCRIBER_BACKUP" EntityType="Self.SUBSCRIBER_BACKUP" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[SUBSCRIBER_BACKUP].[SUBSCRIBER_ID] AS [SUBSCRIBER_ID], 
-[SUBSCRIBER_BACKUP].[SUBSCRIBER_LASTNAME] AS [SUBSCRIBER_LASTNAME], 
-[SUBSCRIBER_BACKUP].[SUBSCRIBER_FIRSTNAME] AS [SUBSCRIBER_FIRSTNAME], 
-[SUBSCRIBER_BACKUP].[SUBSCRIBER_PATRONYMIC] AS [SUBSCRIBER_PATRONYMIC], 
-[SUBSCRIBER_BACKUP].[SUBSCRIBER_ADDRESS] AS [SUBSCRIBER_ADDRESS], 
-[SUBSCRIBER_BACKUP].[SUBSCRIBER_CONNECTION_DATE] AS [SUBSCRIBER_CONNECTION_DATE], 
-[SUBSCRIBER_BACKUP].[SUBSCRIBER_STATUS] AS [SUBSCRIBER_STATUS]
-FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK__CALL__CALLER_ID__6D0D32F4" Association="Self.FK__CALL__CALLER_ID__6D0D32F4">
             <End Role="PHONE_NUMBER" EntitySet="PHONE_NUMBER" />
             <End Role="CALL" EntitySet="CALL" />
@@ -319,9 +279,9 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
             <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
             <End Role="SERVICE_REQUEST" EntitySet="SERVICE_REQUEST" />
           </AssociationSet>
-          <AssociationSet Name="FK_TARIFF_SUBSCRIBER" Association="Self.FK_TARIFF_SUBSCRIBER">
-            <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
+          <AssociationSet Name="FK_SUBSCRIBER_TARIFF" Association="Self.FK_SUBSCRIBER_TARIFF">
             <End Role="TARIFF" EntitySet="TARIFF" />
+            <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -340,15 +300,6 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
           <Property Name="CALL_DURATION" Type="Int32" Nullable="false" />
           <Property Name="CALL_COST" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <NavigationProperty Name="PHONE_NUMBER" Relationship="Self.FK__CALL__CALLER_ID__6D0D32F4" FromRole="CALL" ToRole="PHONE_NUMBER" />
-        </EntityType>
-        <EntityType Name="clients">
-          <Key>
-            <PropertyRef Name="client_id" />
-          </Key>
-          <Property Name="client_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="last_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="first_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="patronymic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="EMPLOYEE">
           <Key>
@@ -449,10 +400,11 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
           <Property Name="SUBSCRIBER_ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SUBSCRIBER_CONNECTION_DATE" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="SUBSCRIBER_STATUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SUBSCRIBER_TARIFF_ID" Type="Int32" />
           <NavigationProperty Name="PAYMENT" Relationship="Self.FK__PAYMENT__SUBSCRI__534D60F1" FromRole="SUBSCRIBER" ToRole="PAYMENT" />
           <NavigationProperty Name="PHONE_NUMBER" Relationship="Self.FK__PHONE_NUM__SUBSC__68487DD7" FromRole="SUBSCRIBER" ToRole="PHONE_NUMBER" />
           <NavigationProperty Name="SERVICE_REQUEST" Relationship="Self.FK__SERVICE_R__SUBSC__6477ECF3" FromRole="SUBSCRIBER" ToRole="SERVICE_REQUEST" />
-          <NavigationProperty Name="TARIFF" Relationship="Self.FK_TARIFF_SUBSCRIBER" FromRole="SUBSCRIBER" ToRole="TARIFF" />
+          <NavigationProperty Name="TARIFF" Relationship="Self.FK_SUBSCRIBER_TARIFF" FromRole="SUBSCRIBER" ToRole="TARIFF" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -469,31 +421,13 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
             <PropertyRef Name="TARIFF_ID" />
           </Key>
           <Property Name="TARIFF_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SUBSCRIBER_ID" Type="Int32" Nullable="false" />
           <Property Name="TARIFF_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="TARIFF_COST" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="TARIFF_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TARIFF_MINUTES_LIMIT" Type="Int32" Nullable="false" />
           <Property Name="TARIFF_DATA_LIMIT" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SERVICE" Relationship="Self.FK__SERVICE__TARIFF___60A75C0F" FromRole="TARIFF" ToRole="SERVICE" />
-          <NavigationProperty Name="SUBSCRIBER" Relationship="Self.FK_TARIFF_SUBSCRIBER" FromRole="TARIFF" ToRole="SUBSCRIBER" />
-        </EntityType>
-        <EntityType Name="SUBSCRIBER_BACKUP">
-          <Key>
-            <PropertyRef Name="SUBSCRIBER_ID" />
-            <PropertyRef Name="SUBSCRIBER_LASTNAME" />
-            <PropertyRef Name="SUBSCRIBER_FIRSTNAME" />
-            <PropertyRef Name="SUBSCRIBER_ADDRESS" />
-            <PropertyRef Name="SUBSCRIBER_CONNECTION_DATE" />
-            <PropertyRef Name="SUBSCRIBER_STATUS" />
-          </Key>
-          <Property Name="SUBSCRIBER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SUBSCRIBER_LASTNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SUBSCRIBER_FIRSTNAME" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SUBSCRIBER_PATRONYMIC" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="SUBSCRIBER_ADDRESS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SUBSCRIBER_CONNECTION_DATE" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="SUBSCRIBER_STATUS" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="SUBSCRIBER" Relationship="Self.FK_SUBSCRIBER_TARIFF" FromRole="TARIFF" ToRole="SUBSCRIBER" />
         </EntityType>
         <Association Name="FK__CALL__CALLER_ID__6D0D32F4">
           <End Role="PHONE_NUMBER" Type="Self.PHONE_NUMBER" Multiplicity="1" />
@@ -591,21 +525,20 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TARIFF_SUBSCRIBER">
-          <End Role="SUBSCRIBER" Type="Self.SUBSCRIBER" Multiplicity="1" />
-          <End Role="TARIFF" Type="Self.TARIFF" Multiplicity="*" />
+        <Association Name="FK_SUBSCRIBER_TARIFF">
+          <End Role="TARIFF" Type="Self.TARIFF" Multiplicity="0..1" />
+          <End Role="SUBSCRIBER" Type="Self.SUBSCRIBER" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SUBSCRIBER">
-              <PropertyRef Name="SUBSCRIBER_ID" />
+            <Principal Role="TARIFF">
+              <PropertyRef Name="TARIFF_ID" />
             </Principal>
-            <Dependent Role="TARIFF">
-              <PropertyRef Name="SUBSCRIBER_ID" />
+            <Dependent Role="SUBSCRIBER">
+              <PropertyRef Name="SUBSCRIBER_TARIFF_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="TelenetDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CALL" EntityType="Self.CALL" />
-          <EntitySet Name="clients" EntityType="Self.clients" />
           <EntitySet Name="EMPLOYEE" EntityType="Self.EMPLOYEE" />
           <EntitySet Name="EQUIPMENT" EntityType="Self.EQUIPMENT" />
           <EntitySet Name="MAINTENANCE" EntityType="Self.MAINTENANCE" />
@@ -616,7 +549,6 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
           <EntitySet Name="SUBSCRIBER" EntityType="Self.SUBSCRIBER" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TARIFF" EntityType="Self.TARIFF" />
-          <EntitySet Name="SUBSCRIBER_BACKUP" EntityType="Self.SUBSCRIBER_BACKUP" />
           <AssociationSet Name="FK__CALL__CALLER_ID__6D0D32F4" Association="Self.FK__CALL__CALLER_ID__6D0D32F4">
             <End Role="PHONE_NUMBER" EntitySet="PHONE_NUMBER" />
             <End Role="CALL" EntitySet="CALL" />
@@ -649,9 +581,9 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
             <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
             <End Role="SERVICE_REQUEST" EntitySet="SERVICE_REQUEST" />
           </AssociationSet>
-          <AssociationSet Name="FK_TARIFF_SUBSCRIBER" Association="Self.FK_TARIFF_SUBSCRIBER">
-            <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
+          <AssociationSet Name="FK_SUBSCRIBER_TARIFF" Association="Self.FK_SUBSCRIBER_TARIFF">
             <End Role="TARIFF" EntitySet="TARIFF" />
+            <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -669,16 +601,6 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
                 <ScalarProperty Name="CALL_DATE" ColumnName="CALL_DATE" />
                 <ScalarProperty Name="CALL_DURATION" ColumnName="CALL_DURATION" />
                 <ScalarProperty Name="CALL_COST" ColumnName="CALL_COST" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="clients">
-            <EntityTypeMapping TypeName="TelenetDBModel.clients">
-              <MappingFragment StoreEntitySet="clients">
-                <ScalarProperty Name="client_id" ColumnName="client_id" />
-                <ScalarProperty Name="last_name" ColumnName="last_name" />
-                <ScalarProperty Name="first_name" ColumnName="first_name" />
-                <ScalarProperty Name="patronymic" ColumnName="patronymic" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -776,6 +698,7 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
                 <ScalarProperty Name="SUBSCRIBER_ADDRESS" ColumnName="SUBSCRIBER_ADDRESS" />
                 <ScalarProperty Name="SUBSCRIBER_CONNECTION_DATE" ColumnName="SUBSCRIBER_CONNECTION_DATE" />
                 <ScalarProperty Name="SUBSCRIBER_STATUS" ColumnName="SUBSCRIBER_STATUS" />
+                <ScalarProperty Name="SUBSCRIBER_TARIFF_ID" ColumnName="SUBSCRIBER_TARIFF_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -794,25 +717,11 @@ FROM [dbo].[SUBSCRIBER_BACKUP] AS [SUBSCRIBER_BACKUP]</DefiningQuery>
             <EntityTypeMapping TypeName="TelenetDBModel.TARIFF">
               <MappingFragment StoreEntitySet="TARIFF">
                 <ScalarProperty Name="TARIFF_ID" ColumnName="TARIFF_ID" />
-                <ScalarProperty Name="SUBSCRIBER_ID" ColumnName="SUBSCRIBER_ID" />
                 <ScalarProperty Name="TARIFF_NAME" ColumnName="TARIFF_NAME" />
                 <ScalarProperty Name="TARIFF_COST" ColumnName="TARIFF_COST" />
                 <ScalarProperty Name="TARIFF_DESCRIPTION" ColumnName="TARIFF_DESCRIPTION" />
                 <ScalarProperty Name="TARIFF_MINUTES_LIMIT" ColumnName="TARIFF_MINUTES_LIMIT" />
                 <ScalarProperty Name="TARIFF_DATA_LIMIT" ColumnName="TARIFF_DATA_LIMIT" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SUBSCRIBER_BACKUP">
-            <EntityTypeMapping TypeName="TelenetDBModel.SUBSCRIBER_BACKUP">
-              <MappingFragment StoreEntitySet="SUBSCRIBER_BACKUP">
-                <ScalarProperty Name="SUBSCRIBER_ID" ColumnName="SUBSCRIBER_ID" />
-                <ScalarProperty Name="SUBSCRIBER_LASTNAME" ColumnName="SUBSCRIBER_LASTNAME" />
-                <ScalarProperty Name="SUBSCRIBER_FIRSTNAME" ColumnName="SUBSCRIBER_FIRSTNAME" />
-                <ScalarProperty Name="SUBSCRIBER_PATRONYMIC" ColumnName="SUBSCRIBER_PATRONYMIC" />
-                <ScalarProperty Name="SUBSCRIBER_ADDRESS" ColumnName="SUBSCRIBER_ADDRESS" />
-                <ScalarProperty Name="SUBSCRIBER_CONNECTION_DATE" ColumnName="SUBSCRIBER_CONNECTION_DATE" />
-                <ScalarProperty Name="SUBSCRIBER_STATUS" ColumnName="SUBSCRIBER_STATUS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

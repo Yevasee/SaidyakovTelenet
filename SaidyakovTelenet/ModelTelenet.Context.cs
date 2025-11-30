@@ -15,16 +15,14 @@ namespace SaidyakovTelenet
     
     public partial class TelenetDBEntities : DbContext
     {
-        private static TelenetDBEntities _context;
+        public static TelenetDBEntities _context;
 
         public static TelenetDBEntities GetContext()
         {
-            if (_context == null)
-            {
-                _context = new TelenetDBEntities();
-            }
+            if (_context == null) _context = new TelenetDBEntities();
             return _context;
         }
+
         public TelenetDBEntities()
             : base("name=TelenetDBEntities")
         {
@@ -36,7 +34,6 @@ namespace SaidyakovTelenet
         }
     
         public DbSet<CALL> CALL { get; set; }
-        public DbSet<clients> clients { get; set; }
         public DbSet<EMPLOYEE> EMPLOYEE { get; set; }
         public DbSet<EQUIPMENT> EQUIPMENT { get; set; }
         public DbSet<MAINTENANCE> MAINTENANCE { get; set; }
@@ -47,6 +44,5 @@ namespace SaidyakovTelenet
         public DbSet<SUBSCRIBER> SUBSCRIBER { get; set; }
         public DbSet<sysdiagrams> sysdiagrams { get; set; }
         public DbSet<TARIFF> TARIFF { get; set; }
-        public DbSet<SUBSCRIBER_BACKUP> SUBSCRIBER_BACKUP { get; set; }
     }
 }

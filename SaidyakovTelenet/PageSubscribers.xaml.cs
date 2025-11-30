@@ -24,7 +24,6 @@ namespace SaidyakovTelenet
         int countOfRecordsInTotal = 0;
         int countOfRecordsOnPage = 0;
 
-        private string userFullName;
         public User currentUser;
         public User CurrentUser
         {

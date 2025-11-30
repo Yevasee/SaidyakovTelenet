@@ -65,9 +65,6 @@
     <Compile Include="CALL.cs">
       <DependentUpon>ModelTelenet.tt</DependentUpon>
     </Compile>
-    <Compile Include="clients.cs">
-      <DependentUpon>ModelTelenet.tt</DependentUpon>
-    </Compile>
     <Compile Include="EMPLOYEE.cs">
       <DependentUpon>ModelTelenet.tt</DependentUpon>
     </Compile>
@@ -77,10 +74,20 @@
     <Compile Include="MAINTENANCE.cs">
       <DependentUpon>ModelTelenet.tt</DependentUpon>
     </Compile>
+    <Compile Include="ModelTelenet.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTelenet.Context.tt</DependentUpon>
+    </Compile>
     <Compile Include="ModelTelenet.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelTelenet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ModelTelenet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ModelTelenet.edmx</DependentUpon>
     </Compile>
     <Compile Include="ModelTelenetUsers.Context.cs">
       <AutoGen>True</AutoGen>
@@ -118,11 +125,8 @@
     <Compile Include="SUBSCRIBER.cs">
       <DependentUpon>ModelTelenet.tt</DependentUpon>
     </Compile>
-    <Compile Include="SUBSCRIBER_BACKUP.cs">
-      <DependentUpon>ModelTelenet.tt</DependentUpon>
-    </Compile>
     <Compile Include="sysdiagrams.cs">
-      <DependentUpon>ModelTelenetUsers.tt</DependentUpon>
+      <DependentUpon>ModelTelenet.tt</DependentUpon>
     </Compile>
     <Compile Include="TARIFF.cs">
       <DependentUpon>ModelTelenet.tt</DependentUpon>
@@ -160,16 +164,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manager.cs" />
-    <Compile Include="ModelTelenet.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelTelenet.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ModelTelenet.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ModelTelenet.edmx</DependentUpon>
-    </Compile>
     <Compile Include="PageSubscribers.xaml.cs">
       <DependentUpon>PageSubscribers.xaml</DependentUpon>
     </Compile>
@@ -190,6 +184,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="ModelTelenetUsers.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ModelTelenetUsers.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <EntityDeploy Include="ModelTelenet.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ModelTelenet.Designer.cs</LastGenOutput>
@@ -197,10 +195,6 @@
     <None Include="ModelTelenet.edmx.diagram">
       <DependentUpon>ModelTelenet.edmx</DependentUpon>
     </None>
-    <EntityDeploy Include="ModelTelenetUsers.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>ModelTelenetUsers.Designer.cs</LastGenOutput>
-    </EntityDeploy>
     <None Include="ModelTelenetUsers.edmx.diagram">
       <DependentUpon>ModelTelenetUsers.edmx</DependentUpon>
     </None>
@@ -217,6 +211,16 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ModelTelenet.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelTelenet.edmx</DependentUpon>
+      <LastGenOutput>ModelTelenet.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="ModelTelenet.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ModelTelenet.edmx</DependentUpon>
+      <LastGenOutput>ModelTelenet.cs</LastGenOutput>
+    </Content>
     <Content Include="ModelTelenetUsers.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>ModelTelenetUsers.edmx</DependentUpon>
@@ -228,16 +232,6 @@
       <LastGenOutput>ModelTelenetUsers.cs</LastGenOutput>
     </Content>
     <Resource Include="images\Telenet_logo.png" />
-    <Content Include="ModelTelenet.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ModelTelenet.Context.cs</LastGenOutput>
-      <DependentUpon>ModelTelenet.edmx</DependentUpon>
-    </Content>
-    <Content Include="ModelTelenet.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>ModelTelenet.edmx</DependentUpon>
-      <LastGenOutput>ModelTelenet.cs</LastGenOutput>
-    </Content>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
