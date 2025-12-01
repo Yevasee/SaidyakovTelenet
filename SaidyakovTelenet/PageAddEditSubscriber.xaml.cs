@@ -18,10 +18,10 @@ namespace SaidyakovTelenet
     /// <summary>
     /// Логика взаимодействия для PageAddEdit.xaml
     /// </summary>
-    public partial class PageAddEdit : Page
+    public partial class PageAddEditSubscriber : Page
     {
         private SUBSCRIBER _currentSubscriber = new SUBSCRIBER();
-        public PageAddEdit(SUBSCRIBER SelectedSubscriber)
+        public PageAddEditSubscriber(SUBSCRIBER SelectedSubscriber)
         {
             InitializeComponent();
             if (SelectedSubscriber != null)
@@ -30,7 +30,6 @@ namespace SaidyakovTelenet
             }
             else
             {
-                //TextBoxSubscriberId.Visibility = Visibility.Collapsed;
                 TextBoxSubscriberId.Foreground = new SolidColorBrush(SystemColors.ControlColor);
                 TextBoxSubscriberId.Background = new SolidColorBrush(SystemColors.ControlColor);
                 _currentSubscriber.SUBSCRIBER_LASTNAME = "Иванов";
@@ -40,6 +39,8 @@ namespace SaidyakovTelenet
                 _currentSubscriber.SUBSCRIBER_CONNECTION_DATE = DateTime.Today;
                 _currentSubscriber.SUBSCRIBER_STATUS = "Активен";
             }
+            ComboBoxSubscriberTariff_Load();
+            ComboBoxSubscriberTariff_Select();
             switch (_currentSubscriber.SUBSCRIBER_STATUS)
             {
                 case "Активен": ComboBoxStatusOfSubscriber.SelectedIndex = 0; break;
@@ -151,6 +152,38 @@ namespace SaidyakovTelenet
                         }
                     }
                 }
+            }
+        }
+
+        private void ComboBoxSubscriberTariff_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!ComboBoxSubscriberTariff.SelectedItem.ToString().Equals("Не указан"))
+            {
+                var _tariffs = TelenetDBEntities.GetContext().TARIFF.ToList();
+                _tariffs = _tariffs.Where(t => t.TARIFF_NAME.Equals(ComboBoxSubscriberTariff.SelectedItem.ToString())).ToList();
+                _currentSubscriber.SUBSCRIBER_TARIFF_ID = _tariffs.First().TARIFF_ID;
+            } else
+            {
+                _currentSubscriber.SUBSCRIBER_TARIFF_ID = null;
+            }
+        }
+        private void ComboBoxSubscriberTariff_Load()
+        {
+            List<string> tariffNames = TelenetDBEntities.GetContext().TARIFF.Select(t => t.TARIFF_NAME).ToList();
+            tariffNames.Add("Не указан");
+
+            ComboBoxSubscriberTariff.ItemsSource = tariffNames;
+        }
+
+        private void ComboBoxSubscriberTariff_Select()
+        {
+            if (!string.IsNullOrEmpty(_currentSubscriber._SUBSCRIBER_TARIFF_NAME))
+            {
+                ComboBoxSubscriberTariff.SelectedItem = _currentSubscriber._SUBSCRIBER_TARIFF_NAME;
+            }
+            else
+            {
+                ComboBoxSubscriberTariff.SelectedItem = "Не указан";
             }
         }
     }

@@ -158,12 +158,12 @@ namespace SaidyakovTelenet
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
-            Manager.FrameBase.Navigate(new PageAddEdit(null));
+            Manager.FrameBase.Navigate(new PageAddEditSubscriber(null));
         }
 
         private void BtnChange_Click(object sender, RoutedEventArgs e)
         {
-            Manager.FrameBase.Navigate(new PageAddEdit((sender as Button).DataContext as SUBSCRIBER));
+            Manager.FrameBase.Navigate(new PageAddEditSubscriber((sender as Button).DataContext as SUBSCRIBER));
         }
         private void Page_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {

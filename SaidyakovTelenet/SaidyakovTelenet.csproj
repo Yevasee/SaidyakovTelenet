@@ -104,8 +104,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelTelenetUsers.edmx</DependentUpon>
     </Compile>
-    <Compile Include="PageAddEdit.xaml.cs">
-      <DependentUpon>PageAddEdit.xaml</DependentUpon>
+    <Compile Include="PageAddEditSubscriber.xaml.cs">
+      <DependentUpon>PageAddEditSubscriber.xaml</DependentUpon>
     </Compile>
     <Compile Include="PageAuth.xaml.cs">
       <DependentUpon>PageAuth.xaml</DependentUpon>
@@ -149,7 +149,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PageAddEdit.xaml">
+    <Page Include="PageAddEditSubscriber.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

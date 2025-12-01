@@ -47,6 +47,19 @@ namespace SaidyakovTelenet
             }
             set { }
         }
+        public String _SUBSCRIBER_TARIFF_NAME
+        {
+            get 
+            {
+                String tariffName = "Не указан";
+                if (SUBSCRIBER_TARIFF_ID != null)
+                {
+                    tariffName = TARIFF.TARIFF_NAME;
+                }
+                return tariffName;
+            } 
+            set { }
+        }
         public virtual ICollection<PAYMENT> PAYMENT { get; set; }
         public virtual ICollection<PHONE_NUMBER> PHONE_NUMBER { get; set; }
         public virtual ICollection<SERVICE_REQUEST> SERVICE_REQUEST { get; set; }
