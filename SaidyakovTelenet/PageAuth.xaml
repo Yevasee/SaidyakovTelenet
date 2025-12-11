@@ -18,12 +18,12 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="0" HorizontalAlignment="Center">
             <TextBlock Text="Логин" Grid.Column="0" Margin="10" HorizontalAlignment="Left"/>
-            <TextBox Name="TextBoxLogin" Text="loginDEftn2018" Width="200" Height="30" Grid.Column="1" HorizontalAlignment="Right"/>
+            <TextBox Name="TextBoxLogin" Text="admin" Width="200" Height="30" Grid.Column="1" HorizontalAlignment="Right"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Margin="10" Grid.Row="1" HorizontalAlignment="Center">
             <TextBlock Text="Пароль" Margin="10" HorizontalAlignment="Left"/>
-            <TextBox Name="TextBoxPassword" Text="gPq+a}" Width="200" Height="30" Margin="10" HorizontalAlignment="Right"/>
+            <TextBox Name="TextBoxPassword" Text="admin" Width="200" Height="30" Margin="10" HorizontalAlignment="Right"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="2">

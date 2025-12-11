@@ -16,11 +16,57 @@ namespace SaidyakovTelenet
     {
         public int REQUEST_ID { get; set; }
         public int SUBSCRIBER_ID { get; set; }
-        public string REQUEST_TYPE { get; set; }
+        public int REQUEST_TYPE_ID { get; set; }
+        public int REQUEST_STATUS_ID { get; set; }
         public string REQUEST_DESCRIPTION { get; set; }
         public System.DateTime REQUEST_CREATION_DATE { get; set; }
-        public string REQUEST_STATUS { get; set; }
-    
+        public string subscriberFullName
+        {
+            get
+            {
+                string name = SUBSCRIBER.SUBSCRIBER_LASTNAME + ' ' + SUBSCRIBER.SUBSCRIBER_FIRSTNAME + ' ' + SUBSCRIBER.SUBSCRIBER_PATRONYMIC;
+                return name;
+            }
+            set { }
+        }
+        public String _REQUEST_TYPE_NAME
+        {
+            get
+            {
+                String name = "Не указан";
+                if (REQUEST_TYPE_ID != 0)
+                {
+                    name = REQUEST_TYPE.REQUEST_TYPE_NAME;
+                }
+                return name;
+            }
+            set { }
+        }
+        public String _REQUEST_STATUS_NAME
+        {
+            get
+            {
+                String name = "Не указан";
+                if (REQUEST_STATUS_ID != 0)
+                {
+                    name = REQUEST_STATUS.REQUEST_STATUS_NAME;
+                }
+                return name;
+            }
+            set { }
+        }
+        public String _REQUEST_CREATION_DATE
+        {
+            get
+            {
+                String date = REQUEST_CREATION_DATE.ToString("dd.MM.yyyy");
+                return date;
+            }
+            set { }
+        }
+
+        public virtual REQUEST_STATUS REQUEST_STATUS { get; set; }
+        public virtual REQUEST_TYPE REQUEST_TYPE { get; set; }
         public virtual SUBSCRIBER SUBSCRIBER { get; set; }
     }
 }

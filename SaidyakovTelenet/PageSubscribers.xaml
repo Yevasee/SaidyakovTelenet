@@ -97,10 +97,16 @@
                                 </Grid>
                             </Border>
 
-                            <Button Grid.Column="1" Grid.RowSpan="7" Name="BtnChange" Content="Изменить" Margin="10" Padding="10"
-                                HorizontalAlignment="Center" VerticalAlignment="Center"
-                                Click="BtnChange_Click" Loaded="BtnChange_Loaded">
-                            </Button>
+                            <StackPanel Grid.Column="1" Grid.RowSpan="7" Orientation="Vertical">
+                                <Button Name="BtnChange" Content="Изменить" Margin="10" Padding="10"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Click="BtnChange_Click" Loaded="BtnChange_Loaded">
+                                </Button>
+                                <Button Name="BtnServiceRequest" Content="Тех. заявка" Margin="10" Padding="10"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Click="BtnServiceRequest_Click" Loaded="BtnServiceRequest_Loaded">
+                                </Button>
+                            </StackPanel>
                         </Grid>
                     </Border>
                 </DataTemplate>

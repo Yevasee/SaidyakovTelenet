@@ -110,10 +110,19 @@
     <Compile Include="PageAuth.xaml.cs">
       <DependentUpon>PageAuth.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PageSubscriberServiceRequest.xaml.cs">
+      <DependentUpon>PageSubscriberServiceRequest.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PAYMENT.cs">
       <DependentUpon>ModelTelenet.tt</DependentUpon>
     </Compile>
     <Compile Include="PHONE_NUMBER.cs">
+      <DependentUpon>ModelTelenet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="REQUEST_STATUS.cs">
+      <DependentUpon>ModelTelenet.tt</DependentUpon>
+    </Compile>
+    <Compile Include="REQUEST_TYPE.cs">
       <DependentUpon>ModelTelenet.tt</DependentUpon>
     </Compile>
     <Compile Include="SERVICE.cs">
@@ -158,6 +167,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PageSubscribers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PageSubscriberServiceRequest.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

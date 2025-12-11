@@ -72,6 +72,20 @@
           <Property Name="PHONE_STATUS" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="PHONE_ACTIVATION_DATE" Type="date" Nullable="false" />
         </EntityType>
+        <EntityType Name="REQUEST_STATUS">
+          <Key>
+            <PropertyRef Name="REQUEST_STATUS_ID" />
+          </Key>
+          <Property Name="REQUEST_STATUS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="REQUEST_STATUS_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REQUEST_TYPE">
+          <Key>
+            <PropertyRef Name="REQUEST_TYPE_ID" />
+          </Key>
+          <Property Name="REQUEST_TYPE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="REQUEST_TYPE_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="SERVICE">
           <Key>
             <PropertyRef Name="SERVICE_ID" />
@@ -88,10 +102,10 @@
           </Key>
           <Property Name="REQUEST_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SUBSCRIBER_ID" Type="int" Nullable="false" />
-          <Property Name="REQUEST_TYPE" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="REQUEST_DESCRIPTION" Type="text" Nullable="false" />
+          <Property Name="REQUEST_TYPE_ID" Type="int" Nullable="false" />
+          <Property Name="REQUEST_STATUS_ID" Type="int" Nullable="false" />
+          <Property Name="REQUEST_DESCRIPTION" Type="text" />
           <Property Name="REQUEST_CREATION_DATE" Type="datetime" Nullable="false" />
-          <Property Name="REQUEST_STATUS" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="SUBSCRIBER">
           <Key>
@@ -223,6 +237,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SERVICE_REQUEST_REQUEST_STATUS">
+          <End Role="REQUEST_STATUS" Type="Self.REQUEST_STATUS" Multiplicity="1" />
+          <End Role="SERVICE_REQUEST" Type="Self.SERVICE_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REQUEST_STATUS">
+              <PropertyRef Name="REQUEST_STATUS_ID" />
+            </Principal>
+            <Dependent Role="SERVICE_REQUEST">
+              <PropertyRef Name="REQUEST_STATUS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICE_REQUEST_REQUEST_TYPE">
+          <End Role="REQUEST_TYPE" Type="Self.REQUEST_TYPE" Multiplicity="1" />
+          <End Role="SERVICE_REQUEST" Type="Self.SERVICE_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REQUEST_TYPE">
+              <PropertyRef Name="REQUEST_TYPE_ID" />
+            </Principal>
+            <Dependent Role="SERVICE_REQUEST">
+              <PropertyRef Name="REQUEST_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SUBSCRIBER_TARIFF">
           <End Role="TARIFF" Type="Self.TARIFF" Multiplicity="0..1" />
           <End Role="SUBSCRIBER" Type="Self.SUBSCRIBER" Multiplicity="*" />
@@ -242,6 +280,8 @@
           <EntitySet Name="MAINTENANCE" EntityType="Self.MAINTENANCE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PAYMENT" EntityType="Self.PAYMENT" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PHONE_NUMBER" EntityType="Self.PHONE_NUMBER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REQUEST_STATUS" EntityType="Self.REQUEST_STATUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REQUEST_TYPE" EntityType="Self.REQUEST_TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SERVICE" EntityType="Self.SERVICE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SERVICE_REQUEST" EntityType="Self.SERVICE_REQUEST" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SUBSCRIBER" EntityType="Self.SUBSCRIBER" Schema="dbo" store:Type="Tables" />
@@ -277,6 +317,14 @@
           </AssociationSet>
           <AssociationSet Name="FK__SERVICE_R__SUBSC__6477ECF3" Association="Self.FK__SERVICE_R__SUBSC__6477ECF3">
             <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
+            <End Role="SERVICE_REQUEST" EntitySet="SERVICE_REQUEST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICE_REQUEST_REQUEST_STATUS" Association="Self.FK_SERVICE_REQUEST_REQUEST_STATUS">
+            <End Role="REQUEST_STATUS" EntitySet="REQUEST_STATUS" />
+            <End Role="SERVICE_REQUEST" EntitySet="SERVICE_REQUEST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICE_REQUEST_REQUEST_TYPE" Association="Self.FK_SERVICE_REQUEST_REQUEST_TYPE">
+            <End Role="REQUEST_TYPE" EntitySet="REQUEST_TYPE" />
             <End Role="SERVICE_REQUEST" EntitySet="SERVICE_REQUEST" />
           </AssociationSet>
           <AssociationSet Name="FK_SUBSCRIBER_TARIFF" Association="Self.FK_SUBSCRIBER_TARIFF">
@@ -366,6 +414,22 @@
           <NavigationProperty Name="EQUIPMENT" Relationship="Self.FK__EQUIPMENT__PHONE__74AE54BC" FromRole="PHONE_NUMBER" ToRole="EQUIPMENT" />
           <NavigationProperty Name="SUBSCRIBER" Relationship="Self.FK__PHONE_NUM__SUBSC__68487DD7" FromRole="PHONE_NUMBER" ToRole="SUBSCRIBER" />
         </EntityType>
+        <EntityType Name="REQUEST_STATUS">
+          <Key>
+            <PropertyRef Name="REQUEST_STATUS_ID" />
+          </Key>
+          <Property Name="REQUEST_STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="REQUEST_STATUS_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SERVICE_REQUEST" Relationship="Self.FK_SERVICE_REQUEST_REQUEST_STATUS" FromRole="REQUEST_STATUS" ToRole="SERVICE_REQUEST" />
+        </EntityType>
+        <EntityType Name="REQUEST_TYPE">
+          <Key>
+            <PropertyRef Name="REQUEST_TYPE_ID" />
+          </Key>
+          <Property Name="REQUEST_TYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="REQUEST_TYPE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="SERVICE_REQUEST" Relationship="Self.FK_SERVICE_REQUEST_REQUEST_TYPE" FromRole="REQUEST_TYPE" ToRole="SERVICE_REQUEST" />
+        </EntityType>
         <EntityType Name="SERVICE">
           <Key>
             <PropertyRef Name="SERVICE_ID" />
@@ -383,10 +447,12 @@
           </Key>
           <Property Name="REQUEST_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SUBSCRIBER_ID" Type="Int32" Nullable="false" />
-          <Property Name="REQUEST_TYPE" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="REQUEST_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="REQUEST_TYPE_ID" Type="Int32" Nullable="false" />
+          <Property Name="REQUEST_STATUS_ID" Type="Int32" Nullable="false" />
+          <Property Name="REQUEST_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="REQUEST_CREATION_DATE" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="REQUEST_STATUS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="REQUEST_STATUS" Relationship="Self.FK_SERVICE_REQUEST_REQUEST_STATUS" FromRole="SERVICE_REQUEST" ToRole="REQUEST_STATUS" />
+          <NavigationProperty Name="REQUEST_TYPE" Relationship="Self.FK_SERVICE_REQUEST_REQUEST_TYPE" FromRole="SERVICE_REQUEST" ToRole="REQUEST_TYPE" />
           <NavigationProperty Name="SUBSCRIBER" Relationship="Self.FK__SERVICE_R__SUBSC__6477ECF3" FromRole="SERVICE_REQUEST" ToRole="SUBSCRIBER" />
         </EntityType>
         <EntityType Name="SUBSCRIBER">
@@ -501,6 +567,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SERVICE_REQUEST_REQUEST_STATUS">
+          <End Role="REQUEST_STATUS" Type="Self.REQUEST_STATUS" Multiplicity="1" />
+          <End Role="SERVICE_REQUEST" Type="Self.SERVICE_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REQUEST_STATUS">
+              <PropertyRef Name="REQUEST_STATUS_ID" />
+            </Principal>
+            <Dependent Role="SERVICE_REQUEST">
+              <PropertyRef Name="REQUEST_STATUS_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SERVICE_REQUEST_REQUEST_TYPE">
+          <End Role="REQUEST_TYPE" Type="Self.REQUEST_TYPE" Multiplicity="1" />
+          <End Role="SERVICE_REQUEST" Type="Self.SERVICE_REQUEST" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REQUEST_TYPE">
+              <PropertyRef Name="REQUEST_TYPE_ID" />
+            </Principal>
+            <Dependent Role="SERVICE_REQUEST">
+              <PropertyRef Name="REQUEST_TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__SERVICE__TARIFF___60A75C0F">
           <End Role="TARIFF" Type="Self.TARIFF" Multiplicity="1" />
           <End Role="SERVICE" Type="Self.SERVICE" Multiplicity="*" />
@@ -544,6 +634,8 @@
           <EntitySet Name="MAINTENANCE" EntityType="Self.MAINTENANCE" />
           <EntitySet Name="PAYMENT" EntityType="Self.PAYMENT" />
           <EntitySet Name="PHONE_NUMBER" EntityType="Self.PHONE_NUMBER" />
+          <EntitySet Name="REQUEST_STATUS" EntityType="Self.REQUEST_STATUS" />
+          <EntitySet Name="REQUEST_TYPE" EntityType="Self.REQUEST_TYPE" />
           <EntitySet Name="SERVICE" EntityType="Self.SERVICE" />
           <EntitySet Name="SERVICE_REQUEST" EntityType="Self.SERVICE_REQUEST" />
           <EntitySet Name="SUBSCRIBER" EntityType="Self.SUBSCRIBER" />
@@ -572,6 +664,14 @@
           <AssociationSet Name="FK__PHONE_NUM__SUBSC__68487DD7" Association="Self.FK__PHONE_NUM__SUBSC__68487DD7">
             <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
             <End Role="PHONE_NUMBER" EntitySet="PHONE_NUMBER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICE_REQUEST_REQUEST_STATUS" Association="Self.FK_SERVICE_REQUEST_REQUEST_STATUS">
+            <End Role="REQUEST_STATUS" EntitySet="REQUEST_STATUS" />
+            <End Role="SERVICE_REQUEST" EntitySet="SERVICE_REQUEST" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SERVICE_REQUEST_REQUEST_TYPE" Association="Self.FK_SERVICE_REQUEST_REQUEST_TYPE">
+            <End Role="REQUEST_TYPE" EntitySet="REQUEST_TYPE" />
+            <End Role="SERVICE_REQUEST" EntitySet="SERVICE_REQUEST" />
           </AssociationSet>
           <AssociationSet Name="FK__SERVICE__TARIFF___60A75C0F" Association="Self.FK__SERVICE__TARIFF___60A75C0F">
             <End Role="TARIFF" EntitySet="TARIFF" />
@@ -665,6 +765,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="REQUEST_STATUS">
+            <EntityTypeMapping TypeName="TelenetDBModel.REQUEST_STATUS">
+              <MappingFragment StoreEntitySet="REQUEST_STATUS">
+                <ScalarProperty Name="REQUEST_STATUS_ID" ColumnName="REQUEST_STATUS_ID" />
+                <ScalarProperty Name="REQUEST_STATUS_NAME" ColumnName="REQUEST_STATUS_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REQUEST_TYPE">
+            <EntityTypeMapping TypeName="TelenetDBModel.REQUEST_TYPE">
+              <MappingFragment StoreEntitySet="REQUEST_TYPE">
+                <ScalarProperty Name="REQUEST_TYPE_ID" ColumnName="REQUEST_TYPE_ID" />
+                <ScalarProperty Name="REQUEST_TYPE_NAME" ColumnName="REQUEST_TYPE_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SERVICE">
             <EntityTypeMapping TypeName="TelenetDBModel.SERVICE">
               <MappingFragment StoreEntitySet="SERVICE">
@@ -681,10 +797,10 @@
               <MappingFragment StoreEntitySet="SERVICE_REQUEST">
                 <ScalarProperty Name="REQUEST_ID" ColumnName="REQUEST_ID" />
                 <ScalarProperty Name="SUBSCRIBER_ID" ColumnName="SUBSCRIBER_ID" />
-                <ScalarProperty Name="REQUEST_TYPE" ColumnName="REQUEST_TYPE" />
+                <ScalarProperty Name="REQUEST_TYPE_ID" ColumnName="REQUEST_TYPE_ID" />
+                <ScalarProperty Name="REQUEST_STATUS_ID" ColumnName="REQUEST_STATUS_ID" />
                 <ScalarProperty Name="REQUEST_DESCRIPTION" ColumnName="REQUEST_DESCRIPTION" />
                 <ScalarProperty Name="REQUEST_CREATION_DATE" ColumnName="REQUEST_CREATION_DATE" />
-                <ScalarProperty Name="REQUEST_STATUS" ColumnName="REQUEST_STATUS" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

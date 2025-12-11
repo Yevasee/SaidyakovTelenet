@@ -183,5 +183,19 @@ namespace SaidyakovTelenet
                 button.Visibility = currentUser == null ? Visibility.Collapsed : Visibility.Visible;
             }
         }
+
+        private void BtnServiceRequest_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.FrameBase.Navigate(new PageSubscriberServiceRequest((sender as Button).DataContext as SUBSCRIBER));
+        }
+
+        private void BtnServiceRequest_Loaded(object sender, RoutedEventArgs e)
+        {
+            Button button = sender as Button;
+            if (button != null)
+            {
+                button.Visibility = currentUser == null ? Visibility.Collapsed : Visibility.Visible;
+            }
+        }
     }
 }
